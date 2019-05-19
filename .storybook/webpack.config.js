@@ -3,15 +3,20 @@ const path = require('path');
 module.exports = ({ config, mode }) => {
   config.module.rules.push({
     test: /\.(ts|tsx)$/,
-    loader: require.resolve('babel-loader'),
-    options: {
-      presets: [['react-app', { flow: false, typescript: true }]],
-    },
+    use: [
+      {
+        loader: require.resolve('babel-loader'),
+        options: {
+          presets: [['react-app', { flow: false, typescript: true }]],
+        },
+      },
+      ...(mode === 'PRODUCTION' ? [require.resolve("react-docgen-typescript-loader")] : [])
+    ],
   });
   config.module.rules.push({
     test: /\.s?css$/,
     loaders: ["style-loader", "css-loader", "sass-loader"],
-    include: path.resolve(__dirname, "../src")
+    include: path.resolve(__dirname, "../src"),
   });
   config.resolve.extensions.push('.ts', '.tsx');
   return config;
