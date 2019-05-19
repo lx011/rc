@@ -1,0 +1,51 @@
+{
+  "name": "nui",
+  "version": "0.0.1",
+  "description": "React components",
+  "author": "lencx <cxin1314@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "start-storybook -p 6006",
+    "build": "npm run lint && build-storybook",
+    "build-lib-watch": "tsc -w",
+    "deploy-storybook": "gh-pages -d storybook-static",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'"
+  },
+  "keywords": [
+    "react",
+    "components",
+    "nui",
+    "ui"
+  ],
+  "homepage": "https://nofwl.github.io/nui",
+  "repository": "git@github.com:nofwl/nui.git",
+  "bugs": {
+    "url": "https://github.com/nofwl/nui/issues"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^5.0.11",
+    "@storybook/addon-info": "^5.0.11",
+    "@storybook/addon-links": "^5.0.11",
+    "@storybook/addons": "^5.0.11",
+    "@storybook/react": "^5.0.11",
+    "@storybook/theming": "^5.0.11",
+    "@types/jest": "^24.0.13",
+    "@types/react-dom": "^16.8.4",
+    "@types/storybook__react": "^4.0.1",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.0.6",
+    "gh-pages": "^2.0.1",
+    "jest": "^24.8.0",
+    "node-sass": "^4.12.0",
+    "react-docgen-typescript-loader": "^3.1.0",
+    "sass-loader": "^7.1.0",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.16.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.4.5"
+  },
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  }
+}
