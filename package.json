@@ -5,7 +5,7 @@
   "author": "lencx <cxin1314@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "start-storybook -p 9088 -s public",
+    "dev": "start-storybook -p 9089 -s public",
     "build": "npm run lint && build-storybook -s public",
     "deploy": "npm run build && gh-pages -d storybook-static",
     "build-lib-watch": "tsc -w",
