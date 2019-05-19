@@ -1,1 +1,0 @@
-{"version":3,"file":"main.7398620406c6702526ed.bundle.js","sources":["webpack:///./src/components/Button/index.ts"],"sourcesContent":["import Button from './Button'\nimport './Button.scss'\n\nexport default Button\n"],"mappings":"AAGA","sourceRoot":""}
