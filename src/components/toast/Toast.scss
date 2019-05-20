@@ -1,0 +1,14 @@
+#toast__root {
+  position: absolute;
+  bottom: 24px;
+  top: auto;
+  z-index: 9999;
+  width: 200px;
+  .toast__item {
+    background: #eee;
+    margin-bottom: 10px;
+    transition: all 500ms ease;
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
