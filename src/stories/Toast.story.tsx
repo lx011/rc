@@ -36,7 +36,7 @@ const Messages = () => {
       placement,
       maxCount,
       duration,
-      message: <b>skaslks - {count}</b>,
+      message: <b>message::{count}</b>,
       // onUndo: () => {
       //   alert(111);
       // },

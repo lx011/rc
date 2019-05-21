@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+// import InfoIcon from './../icons/info';
+// import InfoIcon from './../icons/info';
 
 export type ToastPlacement = 'topLeft'|'topCenter'|'topRight'|'bottomLeft'|'bottomCenter'|'bottomRight';
 export type ToastPosition = 'top'|'left'|'right'|'bottom';
@@ -229,7 +231,8 @@ const api = {
 }
 
 function noticeBase({ type, message, ...rest }: MessageProps) {
-  const renderMessage = <React.Fragment>[{type}] - {message}</React.Fragment>;
+  const Icon = require(`./../icons/${type}`).default;
+  const renderMessage = <React.Fragment><Icon />{' '}{message}</React.Fragment>;
   BaseToast({ content: renderMessage, ...rest });
 }
 
