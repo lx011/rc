@@ -3,12 +3,65 @@
   bottom: 24px;
   top: auto;
   z-index: 9999;
-  width: 200px;
   .toast__item {
     background: #eee;
     margin-bottom: 10px;
     transition: all 500ms ease;
+    padding: 10px 16px;
+  }
+}
+
+.fadeTopIn {
+  animation: topIn 300ms ease;
+}
+.fadeBottomIn {
+  animation: bottomIn 300ms ease;
+}
+.fadeTopOut {
+  animation: topOut 300ms ease;
+}
+.fadeBottomOut {
+  animation: bottomOut 300ms ease;
+}
+
+@keyframes topIn {
+  from {
+    transform: translateY(-100%);
     opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes topOut {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-30%);
+    opacity: 0;
+  }
+}
+
+@keyframes bottomIn {
+  from {
     transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes bottomOut {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(30%);
+    opacity: 0;
   }
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
 export type ToastPlacement = 'topLeft'|'topCenter'|'topRight'|'bottomLeft'|'bottomCenter'|'bottomRight';
@@ -21,9 +21,32 @@ export interface BaseToastContainerProps {
   undoIcon?: React.ReactNode;
 }
 
+// export interface ToastConfigProps {
+//   top?: number|string;
+//   bottom?: number|string;
+//   left?: number|string;
+//   right?: number|string;
+//   duration?: number;
+//   maxCount?: number;
+//   placement?: ToastPlacement;
+//   getContainer?: () => HTMLElement;
+// }
+
 export interface MessageProps extends BaseToastContainerProps {
   message: React.ReactNode;
 }
+
+// tslint:disable-next-line:prefer-const
+// let toastConfig: ToastConfigProps = {
+//   top: 24,
+//   bottom: 'unset',
+//   left: 24,
+//   right: 'unset',
+//   maxCount: 1,
+//   duration: 3000,
+//   placement: 'topLeft',
+//   getContainer: () => document.body,
+// };
 
 function BaseToastContainer({
   content,
@@ -34,18 +57,6 @@ function BaseToastContainer({
   undoIcon = '[⟳]',
   closeIcon = '[✕]',
 }: BaseToastContainerProps) {
-  const toastRef: any = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState(0);
-
-  useEffect(() => {
-    setHeight(toastRef.current.offsetHeight);
-    toastRef.current.parentNode.style.height = `${height}px`;
-    toastRef.current.parentNode.style.transform = `translateY(${height}px)`;
-    // element fadeIn
-    toastRef.current.parentNode.style.transform = 'translateY(0)';
-    toastRef.current.parentNode.style.opacity = 1;
-  }, [height])
-
   const handleUndo = () => {
     onUndo && onUndo();
   };
@@ -56,7 +67,7 @@ function BaseToastContainer({
     onResume && onResume();
   };
   return (
-    <div ref={toastRef} onMouseEnter={handlePause} onMouseLeave={handleResume}>
+    <div onMouseEnter={handlePause} onMouseLeave={handleResume}>
       {content}
       {onUndo && <span className="undo" onClick={handleUndo}>{undoIcon}</span>}
       {onClose && <span className="close" onClick={handleUndo}>{closeIcon}</span>}
@@ -125,15 +136,18 @@ function BaseToast({
   content,
   getContainer,
   maxCount = 1,
-  duration = 10000,
+  duration = 3000,
   placement = 'bottomCenter',
   ...rest
 }: BaseToastContainerProps) {
+  // const { placement, getContainer, maxCount, duration } = toastConfig;
   const TOAST_ITEM_ID = `toast__item__${TOAST_ID}`;
   let rootNode = document.querySelector(toastPrefixCls);
   let toastItem: any = document.getElementById(TOAST_ITEM_ID);
 
-  renderPlacement(placement);
+  const isTop = /top/ig.test(placement!);
+  const itemAni = isTop ? 'Top' : 'Bottom';
+  renderPlacement(placement!);
 
   if (!rootNode) {
     const root = (typeof getContainer === 'function' && getContainer()) || document.body;
@@ -144,28 +158,26 @@ function BaseToast({
   if (!toastItem) {
     toastItem = document.createElement('div');
     toastItem.id = TOAST_ITEM_ID;
-    toastItem.classList.add('toast__item');
-
-    toastItem.style.opacity = 0;
-    toastItem.style.height = 0;
+    toastItem.classList.add('toast__item', `fade${itemAni}In`);
   }
 
-  const removeChid = () => {
+  const removeChid = (type: string) => {
     if (allToast.length > 0) {
       const removeEl = allToast[0];
-      // element fadeOut
-      removeEl.style.opacity = 0;
-      removeEl.style.transform = 'translateY(30%)';
-      setTimeout(() => {
+      removeEl.classList.add(`fade${itemAni}Out`);
+      const removeNode = () => {
         rootNode && rootNode.removeChild(allToast[0]);
         allToast.shift();
-      }, 300);
+      }
+      type === 'force'
+        ? removeNode()
+        : setTimeout(removeNode, 300)
     }
   };
 
   // toast max count
-  if (allToast.length >= maxCount) {
-    removeChid();
+  if (allToast.length >= maxCount!) {
+    removeChid('force');
   } else {
     timer = null;
   }
@@ -174,7 +186,7 @@ function BaseToast({
   let remaining: number;
   const start = Date.now();
   clearTimeout(timer);
-  remaining = duration;
+  remaining = duration!;
 
   const handleOnPause = () => {
     // console.info('Pause');
@@ -184,7 +196,7 @@ function BaseToast({
   const handleOnResume = () => {
     // console.info('Init/Resume');
     timer = setTimeout(() => {
-      removeChid();
+      removeChid('auto');
     }, remaining);
   };
   handleOnResume();
@@ -202,9 +214,18 @@ function BaseToast({
   }
 }
 
+// function setToastConfig(options: ToastConfigProps) {
+//   Object.keys(options).forEach(key => {
+//     if (key !== undefined && key in toastConfig) {
+//       toastConfig[key] = options[key];
+//     }
+//   })
+// }
+
 const api = {
   open: BaseToast,
   openMessage: noticeBase,
+  // config: setToastConfig,
 }
 
 function noticeBase({ type, message, ...rest }: MessageProps) {
@@ -220,8 +241,13 @@ function noticeBase({ type, message, ...rest }: MessageProps) {
     })
 });
 
+// TODO: toast.config
 export interface ToastAPI {
+  // toast base
+  // config(options: ToastConfigProps): void;
   open(args: MessageProps): void;
+
+  // message
   info(args: MessageProps): void;
   warn(args: MessageProps): void;
   error(args: MessageProps): void;

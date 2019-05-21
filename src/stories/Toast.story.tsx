@@ -1,34 +1,42 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { select, number } from '@storybook/addon-knobs/react';
+
 import toast from '../components/toast';
 
 let count = 0;
 
-const SelectPlacement = ({ options, defaultVal, onChange }: any) => {
-  const handleChange = (val: any) => {
-    onChange && onChange(val.currentTarget.value);
-  };
-  return (
-    <select value={defaultVal} onChange={handleChange}>
-      {options.map((item: any) => (<option key={item} value={item}>{item}</option>))}
-    </select>
-  );
-};
-
 const Messages = () => {
-  const [placement, setPlacement] = useState('bottomCenter');
-  const [messageType, setMessageType] = useState('info');
-  const [maxCount, setMaxCount] = useState(1);
+  // toast placement
+  const placementOpts = ['topLeft', 'topCenter', 'topRight', 'bottomLeft', 'bottomCenter', 'bottomRight'];
+  const placement = select('Placement', placementOpts, 'topLeft');
+
+  // toast message type
+  const messageOpts = ['info', 'warn', 'error', 'success', 'loading'];
+  const messageType = select('MessageType', messageOpts, 'info');
+
+  // toast max count
+  const maxCount = number('MaxCount', 1, { range: false, min: 1, max: 8, step: 1 });
+  const duration = number('Duration / ms', 2000);
+
+  // TODO
+  // toast.config({
+  //   getContainer: () => document.getElementById('toast__message'),
+  //   placement,
+  //   maxCount,
+  //   duration,
+  //   top: 30,
+  //   // bottom: 24,
+  // });
 
   const handleClick = () => {
-    console.log(111);
     count += 1;
     toast[messageType]({
       getContainer: () => document.getElementById('toast__message'),
-      // eslint-disable-next-line react/jsx-one-expression-per-line
-      message: <b>skaslks - {count}</b>,
-      maxCount,
       placement,
+      maxCount,
+      duration,
+      message: <b>skaslks - {count}</b>,
       // onUndo: () => {
       //   alert(111);
       // },
@@ -39,29 +47,6 @@ const Messages = () => {
   return (
     <>
       <div id="toast__message" />
-      <div>
-        <b>placement</b>
-        {' : '}
-        <SelectPlacement
-          defaultVal={placement}
-          options={['topLeft', 'topCenter', 'topRight', 'bottomLeft', 'bottomCenter', 'bottomRight']}
-          onChange={(val: any) => setPlacement(val)}
-        />
-      </div>
-      <div>
-        <b>message type</b>
-        {' : '}
-        <SelectPlacement
-          defaultVal={messageType}
-          options={['info', 'warn', 'error', 'success', 'loading']}
-          onChange={(val: any) => setMessageType(val)}
-        />
-      </div>
-      <div>
-        <b>message max count</b>
-        {' : '}
-        <input type="text" value={maxCount} onChange={(val: any) => setMaxCount(val.target.value)} />
-      </div>
       <button type="button" onClick={handleClick}>Open the message box</button>
     </>
   );
