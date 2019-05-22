@@ -4,11 +4,17 @@
   "description": "React components",
   "author": "lencx <cxin1314@gmail.com>",
   "license": "MIT",
+  "source": "src/components/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "jsnext:main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "dev": "start-storybook -p 9089 -s public",
-    "build": "npm run lint && build-storybook -s public",
-    "deploy": "npm run build && gh-pages -d storybook-static",
+    "build": "rollup -c",
     "build-lib-watch": "tsc -w",
+    "deploy": "npm run build-storybook && gh-pages -d storybook-static",
+    "build-storybook": "npm run lint && build-storybook -s public",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'"
   },
   "keywords": [
@@ -16,6 +22,9 @@
     "components",
     "nui",
     "ui"
+  ],
+  "files": [
+    "dist"
   ],
   "homepage": "https://nofwl.github.io/nui",
   "repository": "git@github.com:nofwl/nui.git",
@@ -41,6 +50,14 @@
     "jest": "^24.8.0",
     "node-sass": "^4.12.0",
     "react-docgen-typescript-loader": "^3.1.0",
+    "rollup": "^1.12.3",
+    "rollup-plugin-filesize": "^6.0.1",
+    "rollup-plugin-node-resolve": "^5.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-postcss-modules": "^2.0.1",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-terser": "^5.0.0",
+    "rollup-plugin-typescript2": "^0.21.1",
     "sass-loader": "^7.1.0",
     "ts-jest": "^24.0.2",
     "tslint": "^5.16.0",

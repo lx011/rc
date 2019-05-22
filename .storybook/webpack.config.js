@@ -19,5 +19,12 @@ module.exports = ({ config, mode }) => {
     include: path.resolve(__dirname, "../src"),
   });
   config.resolve.extensions.push('.ts', '.tsx');
+  config.resolve.alias['@comp'] = path.resolve(__dirname, "../src/components");
+  config.resolve.alias['@utils'] = path.resolve(__dirname, "../src/utils");
+  // config.resolve.alias = {
+  //   '@comp': path.resolve(__dirname, "../src/components"),
+  //   '@utils': path.resolve(__dirname, "../src/utils")
+  // }
+  // console.log(path.resolve(__dirname, "../src/components"));
   return config;
 };

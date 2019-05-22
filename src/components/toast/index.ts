@@ -1,5 +1,3 @@
-import toast from './Toast';
+export * from './Toast';
 
 import './Toast.scss';
-
-export default toast;

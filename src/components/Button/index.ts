@@ -1,4 +1,3 @@
-import Button from './Button'
-import './Button.scss'
+export * from './Button'
 
-export default Button
+import './Button.scss'

@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import InfoIcon from './../icons/info';
-// import InfoIcon from './../icons/info';
+import { firstUpperCase } from '@utils/tools';
 
 export type ToastPlacement = 'topLeft'|'topCenter'|'topRight'|'bottomLeft'|'bottomCenter'|'bottomRight';
 export type ToastPosition = 'top'|'left'|'right'|'bottom';
 export type IconType = 'info'|'warn'|'error'|'success'|'loading';
 
-export interface BaseToastContainerProps {
+export interface ToastContainerProps {
   content: React.ReactNode;
   icon?: React.ReactNode;
   readonly type?: IconType;
@@ -34,7 +33,7 @@ export interface BaseToastContainerProps {
 //   getContainer?: () => HTMLElement;
 // }
 
-export interface MessageProps extends BaseToastContainerProps {
+export interface MessageProps extends ToastContainerProps {
   message: React.ReactNode;
 }
 
@@ -50,7 +49,7 @@ export interface MessageProps extends BaseToastContainerProps {
 //   getContainer: () => document.body,
 // };
 
-function BaseToastContainer({
+function ToastContainer({
   content,
   onUndo,
   onClose,
@@ -58,7 +57,7 @@ function BaseToastContainer({
   onResume,
   undoIcon = '[⟳]',
   closeIcon = '[✕]',
-}: BaseToastContainerProps) {
+}: ToastContainerProps) {
   const handleUndo = () => {
     onUndo && onUndo();
   };
@@ -80,7 +79,7 @@ function BaseToastContainer({
 const uuid = (): string => (Math.random().toString(36) + Date.now().toString(36)).substr(2, 10);
 
 let TOAST_ID = uuid();
-let timer: any = null;
+let toastTimer: any = null;
 const allToast: HTMLElement|any = [];
 
 // toast root container create
@@ -141,7 +140,7 @@ function BaseToast({
   duration = 3000,
   placement = 'bottomCenter',
   ...rest
-}: BaseToastContainerProps) {
+}: ToastContainerProps) {
   // const { placement, getContainer, maxCount, duration } = toastConfig;
   const TOAST_ITEM_ID = `toast__item__${TOAST_ID}`;
   let rootNode = document.querySelector(toastPrefixCls);
@@ -181,23 +180,23 @@ function BaseToast({
   if (allToast.length >= maxCount!) {
     removeChid('force');
   } else {
-    timer = null;
+    toastTimer = null;
   }
 
   TOAST_ID = uuid();
   let remaining: number;
   const start = Date.now();
-  clearTimeout(timer);
+  clearTimeout(toastTimer);
   remaining = duration!;
 
   const handleOnPause = () => {
     // console.info('Pause');
-    clearTimeout(timer);
+    clearTimeout(toastTimer);
     remaining -= Date.now() - start;
   };
   const handleOnResume = () => {
     // console.info('Init/Resume');
-    timer = setTimeout(() => {
+    toastTimer = setTimeout(() => {
       removeChid('auto');
     }, remaining);
   };
@@ -209,7 +208,7 @@ function BaseToast({
     onResume: handleOnResume,
     ...rest,
   };
-  ReactDOM.render(<BaseToastContainer {...toastProps} />, toastItem)
+  ReactDOM.render(<ToastContainer {...toastProps} />, toastItem)
   if (rootNode) {
     allToast.push(toastItem);
     rootNode.appendChild(toastItem);
@@ -224,21 +223,21 @@ function BaseToast({
 //   })
 // }
 
-const api = {
+const toastApi = {
   open: BaseToast,
-  openMessage: noticeBase,
+  openMessage: toastMessage,
   // config: setToastConfig,
 }
 
-function noticeBase({ type, message, ...rest }: MessageProps) {
-  const Icon = require(`./../icons/${type}`).default;
+function toastMessage({ type, message, ...rest }: MessageProps) {
+  const Icon = type && require(`./../icons`).default[firstUpperCase(type)];
   const renderMessage = <React.Fragment><Icon />{' '}{message}</React.Fragment>;
   BaseToast({ content: renderMessage, ...rest });
 }
 
 ['info', 'warn', 'error', 'success', 'loading'].forEach((type: IconType) => {
-  api[type] = (props: MessageProps) =>
-    api.openMessage({
+  toastApi[type] = (props: MessageProps) =>
+  toastApi.openMessage({
       type,
       ...props,
     })
@@ -251,12 +250,13 @@ export interface ToastAPI {
   open(args: MessageProps): void;
 
   // message
+  openMessage(args: MessageProps): void;
   info(args: MessageProps): void;
   warn(args: MessageProps): void;
   error(args: MessageProps): void;
   success(args: MessageProps): void;
   loading(args: MessageProps): void;
-  openMessage(args: MessageProps): void;
 }
 
-export default api as ToastAPI;
+export const toast = toastApi;
+export default toastApi as ToastAPI;

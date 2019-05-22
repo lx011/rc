@@ -1,0 +1,1 @@
+export const firstUpperCase = ([first, ...rest]: string) => first.toUpperCase() + rest.join('');
