@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, number } from '@storybook/addon-knobs/react';
 
-import { toast } from '../components/toast';
+import { toast, message } from '../components/toast';
 
 let count = 0;
 
@@ -31,7 +31,7 @@ const Messages = () => {
 
   const handleClick = () => {
     count += 1;
-    toast[messageType]({
+    message[messageType]({
       getContainer: () => document.getElementById('toast__message'),
       placement,
       maxCount,
@@ -47,10 +47,27 @@ const Messages = () => {
   return (
     <>
       <div id="toast__message" />
-      <button type="button" onClick={handleClick}>Open the message box</button>
+      <button onClick={handleClick}>Open the message box</button>
     </>
   );
 };
 
+const Toast = () => {
+  const handleClick = () => {
+    count += 1;
+    toast({
+      content: (
+        <>
+          <h1>Note:</h1>
+          <p><b>test:</b> hello toast</p>
+        </>
+      ),
+      duration: 5000,
+    });
+  };
+  return <button onClick={handleClick}>Open the toast box</button>
+}
+
 storiesOf('Feedback|toast', module)
-  .add('basic', () => <Messages />);
+  .add('basic', () => <Toast />)
+  .add('message', () => <Messages />);

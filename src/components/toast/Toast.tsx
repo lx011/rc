@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { firstUpperCase } from '@utils/tools';
+import { Icon } from '@comp/icons';
 
 export type ToastPlacement = 'topLeft'|'topCenter'|'topRight'|'bottomLeft'|'bottomCenter'|'bottomRight';
 export type ToastPosition = 'top'|'left'|'right'|'bottom';
@@ -223,40 +224,41 @@ function BaseToast({
 //   })
 // }
 
-const toastApi = {
-  open: BaseToast,
-  openMessage: toastMessage,
-  // config: setToastConfig,
-}
-
-function toastMessage({ type, message, ...rest }: MessageProps) {
-  const Icon = type && require(`./../icons`).default[firstUpperCase(type)];
-  const renderMessage = <React.Fragment><Icon />{' '}{message}</React.Fragment>;
-  BaseToast({ content: renderMessage, ...rest });
-}
-
-['info', 'warn', 'error', 'success', 'loading'].forEach((type: IconType) => {
-  toastApi[type] = (props: MessageProps) =>
-  toastApi.openMessage({
-      type,
-      ...props,
-    })
-});
 
 // TODO: toast.config
-export interface ToastAPI {
+export interface MessageAPI {
   // toast base
   // config(options: ToastConfigProps): void;
   open(args: MessageProps): void;
 
   // message
   openMessage(args: MessageProps): void;
-  info(args: MessageProps): void;
-  warn(args: MessageProps): void;
-  error(args: MessageProps): void;
-  success(args: MessageProps): void;
-  loading(args: MessageProps): void;
+  info?(args: MessageProps): void;
+  warn?(args: MessageProps): void;
+  error?(args: MessageProps): void;
+  success?(args: MessageProps): void;
+  loading?(args: MessageProps): void;
 }
 
-export const toast = toastApi;
-export default toastApi as ToastAPI;
+const messageApi = {
+  open: BaseToast,
+  openMessage: toastMessage,
+  // config: setToastConfig,
+}
+
+function toastMessage({ type, message, ...rest }: MessageProps) {
+  const MessageIcon = type && Icon[firstUpperCase(type)];
+  const renderMessage = <React.Fragment><MessageIcon />{' '}{message}</React.Fragment>;
+  BaseToast({ content: renderMessage, ...rest });
+}
+
+['info', 'warn', 'error', 'success', 'loading'].forEach((type: IconType) => {
+  messageApi[type] = (props: MessageProps) =>
+  messageApi.openMessage({
+      type,
+      ...props,
+    })
+});
+
+export const toast = BaseToast;
+export const message: MessageAPI = messageApi;
