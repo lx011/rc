@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, number } from '@storybook/addon-knobs/react';
 
-import { message } from '../components/message';
+import { message } from '../components';
 
 let count = 0;
 

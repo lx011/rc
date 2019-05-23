@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import { toast } from '../components/toast';
+import { toast } from '../components';
 
 const Toast = () => {
   const handleClick = () => {

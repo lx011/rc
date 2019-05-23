@@ -33,7 +33,7 @@ export default [
         ]
       }),
       typescript({
-        // clean: true,
+        clean: true,
         exclude: [
           '*.d.ts',
           '**/*.d.ts',
