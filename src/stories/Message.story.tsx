@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { select, number } from '@storybook/addon-knobs/react';
 
-import { message } from '../components';
+import { message } from '../components/message';
 
 let count = 0;
 
@@ -53,4 +53,4 @@ const Messages = () => {
 };
 
 storiesOf('Feedback|message', module)
-  .add('message', () => <Messages />);
+  .add('basic', () => <Messages />);

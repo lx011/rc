@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import './index.scss';
+
 export type ToastPlacement = 'topLeft'|'topCenter'|'topRight'|'bottomLeft'|'bottomCenter'|'bottomRight';
 export type ToastPosition = 'top'|'left'|'right'|'bottom';
 export type ToastIconType = 'info'|'warn'|'error'|'success'|'loading';
@@ -209,3 +211,5 @@ export const toast = ({
     rootNode.appendChild(toastItem);
   }
 };
+
+export default toast;

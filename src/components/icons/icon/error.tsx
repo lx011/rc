@@ -1,20 +1,10 @@
 import React from 'react';
-import { IconProps } from './../interface';
+import { SVGContainer, IconProps } from './../SVGContainer';
 
-export const IconError = ({ size = '1em', color = '#FF5050', className, ...rest }: IconProps) => (
-  <svg
-    className={`nuico ${className}`}
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 1024 1024"
-    fill={color}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...rest}
-  >
+export const IconError = ({ color = '#FF5050', ...rest }: IconProps) => (
+  <SVGContainer color={color} {...rest}>
     <path d="m512.005711 1024c-282.757264 0-512.005711-229.248447-512.005711-511.994289s229.248447-512.005711 512.005711-512.005711 511.994289 229.214183 511.994289 512.005711-229.214183 511.994289-511.994289 511.994289m209.820806-720.88997a48.437757 48.437757 0 0 0 -68.413621 0l-141.88688 141.921144-136.256177-136.256176a46.998673 46.998673 0 0 0 -66.471998 66.460578l136.29044 136.256176-141.955408 141.955408a48.357808 48.357808 0 0 0 68.425042 68.379357l141.921144-141.921144 137.055668 137.055667a46.97583 46.97583 0 1 0 66.426313-66.437735l-137.055667-137.055667 141.921144-141.943987a48.4606 48.4606 0 0 0 0-68.413621"/>
-  </svg>
+  </SVGContainer>
 );
 
 export default IconError;

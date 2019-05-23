@@ -1,6 +1,6 @@
 {
   "name": "@nofwl/nui",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React components",
   "author": "lencx <cxin1314@gmail.com>",
   "license": "MIT",
@@ -31,6 +31,13 @@
   "bugs": {
     "url": "https://github.com/nofwl/nui/issues"
   },
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6"
+  },
   "devDependencies": {
     "@storybook/addon-actions": "^5.0.11",
     "@storybook/addon-centered": "^5.0.11",
@@ -40,6 +47,7 @@
     "@storybook/addons": "^5.0.11",
     "@storybook/react": "^5.0.11",
     "@storybook/theming": "^5.0.11",
+    "@types/classnames": "^2.2.7",
     "@types/jest": "^24.0.13",
     "@types/react-dom": "^16.8.4",
     "@types/storybook__addon-knobs": "^5.0.0",
@@ -54,7 +62,7 @@
     "rollup-plugin-filesize": "^6.0.1",
     "rollup-plugin-node-resolve": "^5.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-postcss-modules": "^2.0.1",
+    "rollup-plugin-postcss": "^2.0.3",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-terser": "^5.0.0",
     "rollup-plugin-typescript2": "^0.21.1",
@@ -63,9 +71,5 @@
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.4.5"
-  },
-  "peerDependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
   }
 }

@@ -1,4 +1,4 @@
-# nui
+# ![nui](.storybook/nui.svg)
 
 > React Components
 
@@ -10,9 +10,18 @@ npm i @nofwl/nui --save
 yarn add @nofwl/nui
 ```
 
-## storybook
+## Storybook
 
 [Demo](https://nofwl.github.io/nui)
+
+## Usage
+
+```jsx
+// example:
+import { message } from '@nofwl/nui';
+// for css
+import '@nofwl/nui/dist/index.css';
+```
 
 ## Feature
 

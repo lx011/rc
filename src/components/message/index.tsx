@@ -46,3 +46,5 @@ function toastMessage({ type, message, ...rest }: MessageProps) {
 });
 
 export const message = messageApi;
+
+export default message;

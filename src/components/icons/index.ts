@@ -1,4 +1,4 @@
-export * from './interface';
+export * from './SVGContainer';
 import './icon.scss';
 
 // icons

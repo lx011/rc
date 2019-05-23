@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { Icon } from '../components/icons';
 
 storiesOf('Base|Icon', module)
-  .add('Simple', () => (
+  .add('basic', () => (
     <div>
       <Icon.Error />
       <Icon.Info />

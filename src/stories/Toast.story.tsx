@@ -1,14 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { select, number } from '@storybook/addon-knobs/react';
 
 import { toast } from '../components/toast';
 
-let count = 0;
-
 const Toast = () => {
   const handleClick = () => {
-    count += 1;
     toast({
       content: (
         <>

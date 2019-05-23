@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+
+import './index.scss';
 
 interface ButtonProps {
   text: string;
@@ -16,3 +18,5 @@ export const Button = ({ text }: ButtonProps) => {
     </div>
   );
 };
+
+export default Button;
