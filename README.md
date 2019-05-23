@@ -17,4 +17,5 @@ yarn add @nofwl/nui
 ## Feature
 
 - [x] icons
+- [x] message - (info, warn, error, success, loading)
 - [x] toast

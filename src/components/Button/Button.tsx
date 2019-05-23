@@ -16,5 +16,3 @@ export const Button = ({ text }: ButtonProps) => {
     </div>
   );
 };
-
-export default Button;

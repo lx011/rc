@@ -1,16 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { firstUpperCase } from '@utils/tools';
-import { Icon } from '@comp/icons';
 
 export type ToastPlacement = 'topLeft'|'topCenter'|'topRight'|'bottomLeft'|'bottomCenter'|'bottomRight';
 export type ToastPosition = 'top'|'left'|'right'|'bottom';
-export type IconType = 'info'|'warn'|'error'|'success'|'loading';
+export type ToastIconType = 'info'|'warn'|'error'|'success'|'loading';
 
-export interface ToastContainerProps {
+export interface ToastProps {
   content: React.ReactNode;
   icon?: React.ReactNode;
-  readonly type?: IconType;
+  readonly type?: ToastIconType;
   maxCount?: number;
   duration?: number;
   placement?: ToastPlacement;
@@ -34,10 +32,6 @@ export interface ToastContainerProps {
 //   getContainer?: () => HTMLElement;
 // }
 
-export interface MessageProps extends ToastContainerProps {
-  message: React.ReactNode;
-}
-
 // tslint:disable-next-line:prefer-const
 // let toastConfig: ToastConfigProps = {
 //   top: 24,
@@ -58,7 +52,7 @@ function ToastContainer({
   onResume,
   undoIcon = '[⟳]',
   closeIcon = '[✕]',
-}: ToastContainerProps) {
+}: ToastProps) {
   const handleUndo = () => {
     onUndo && onUndo();
   };
@@ -134,14 +128,14 @@ function renderPlacement(placement: ToastPlacement) {
   }
 }
 
-function BaseToast({
+export const toast = ({
   content,
   getContainer,
   maxCount = 1,
   duration = 3000,
   placement = 'bottomCenter',
   ...rest
-}: ToastContainerProps) {
+}: ToastProps) => {
   // const { placement, getContainer, maxCount, duration } = toastConfig;
   const TOAST_ITEM_ID = `toast__item__${TOAST_ID}`;
   let rootNode = document.querySelector(toastPrefixCls);
@@ -214,51 +208,4 @@ function BaseToast({
     allToast.push(toastItem);
     rootNode.appendChild(toastItem);
   }
-}
-
-// function setToastConfig(options: ToastConfigProps) {
-//   Object.keys(options).forEach(key => {
-//     if (key !== undefined && key in toastConfig) {
-//       toastConfig[key] = options[key];
-//     }
-//   })
-// }
-
-
-// TODO: toast.config
-export interface MessageAPI {
-  // toast base
-  // config(options: ToastConfigProps): void;
-  open(args: MessageProps): void;
-
-  // message
-  openMessage(args: MessageProps): void;
-  info?(args: MessageProps): void;
-  warn?(args: MessageProps): void;
-  error?(args: MessageProps): void;
-  success?(args: MessageProps): void;
-  loading?(args: MessageProps): void;
-}
-
-const messageApi = {
-  open: BaseToast,
-  openMessage: toastMessage,
-  // config: setToastConfig,
-}
-
-function toastMessage({ type, message, ...rest }: MessageProps) {
-  const MessageIcon = type && Icon[firstUpperCase(type)];
-  const renderMessage = <React.Fragment><MessageIcon />{' '}{message}</React.Fragment>;
-  BaseToast({ content: renderMessage, ...rest });
-}
-
-['info', 'warn', 'error', 'success', 'loading'].forEach((type: IconType) => {
-  messageApi[type] = (props: MessageProps) =>
-  messageApi.openMessage({
-      type,
-      ...props,
-    })
-});
-
-export const toast = BaseToast;
-export const message: MessageAPI = messageApi;
+};
