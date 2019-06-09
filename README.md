@@ -1,4 +1,4 @@
-# ![nui](.storybook/nui.svg)
+# ![nui](https://github.com/nofwl/nui/raw/master/.storybook/nui.svg?sanitize=true)
 
 > React Components
 
@@ -28,3 +28,4 @@ import '@nofwl/nui/dist/index.css';
 - [x] icons
 - [x] message - (info, warn, error, success, loading)
 - [x] toast
+- [x] tabs

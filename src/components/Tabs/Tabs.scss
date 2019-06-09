@@ -1,0 +1,27 @@
+.nl_tabs {
+  .nl_tabs_nav {
+    display: table-cell;
+    padding: 0;
+    margin: 0;
+    >li {
+      float: left;
+      list-style: none;
+      padding: 5px;
+      border: solid 1px #000;
+      cursor: pointer;
+      &.active {
+        background: skyblue;
+      }
+    }
+  }
+  .nl_tabs_container {
+    border: solid 1px #000;
+    padding: 10px;
+    >div {
+      display: none;
+      &.active {
+        display: block;
+      }
+    }
+  }
+}
